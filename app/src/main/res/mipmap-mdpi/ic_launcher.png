@@ -1,0 +1,65 @@
+/*
+ * Copyright (C) 2007 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package org.apache.harmony.xml.dom;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import org.w3c.dom.Attr;
+import org.w3c.dom.CharacterData;
+import org.w3c.dom.DOMException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.ProcessingInstruction;
+import org.w3c.dom.TypeInfo;
+import org.w3c.dom.UserDataHandler;
+
+/**
+ * A straightforward implementation of the corresponding W3C DOM node.
+ *
+ * <p>Some fields have package visibility so other classes can access them while
+ * maintaining the DOM structure.
+ *
+ * <p>This class represents a Node that has neither a parent nor children.
+ * Subclasses may have either.
+ *
+ * <p>Some code was adapted from Apache Xerces.
+ */
+public abstract class NodeImpl implements Node {
+
+    private static final NodeList EMPTY_LIST = new NodeListImpl();
+
+    static final TypeInfo NULL_TYPE_INFO = new TypeInfo() {
+        public String getTypeName() {
+            return null;
+        }
+        public String getTypeNamespace() {
+            return null;
+        }
+        public boolean isDerivedFrom(
+                String typeNamespaceArg, String typeNameArg, int derivationMethod) {
+            return false;
+        }
+    };
+
+    /**
+     * The containing document. This is non-null except for Documen

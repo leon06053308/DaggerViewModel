@@ -1,0 +1,50 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.aiways.daggerviewmodel"
+        minSdkVersion 19
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation librariesDependencies.supportV4
+    implementation librariesDependencies.appcompatV7
+
+    //Todo move to dependencies.gradle
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'com.github.albfernandez:juniversalchardet:2.3.0'
+
+    annotationProcessor librariesDependencies.daggerCompiler
+    annotationProcessor librariesDependencies.lifecycleCompiler
+
+    compileOnly librariesDependencies.javaxAnnotation
+    implementation librariesDependencies.arrow
+    implementation librariesDependencies.rxJava
+    implementation librariesDependencies.rxAndroid
+    implementation librariesDependencies.supportV4
+    implementation librariesDependencies.appcompatV7
+    implementation librariesDependencies.design
+    implementation librariesDependencies.dagger
+    implementation librariesDependencies.lifecycleExtensions
+    implementation librariesDependencies.nav_fragment
+    implementation librariesDependencies.nav_ui
+
+    testImplementation testingDependencies.junit
+    testImplementation testingDependencies.assertj
+    testImplementation testingDependencies.mockito
+    testImplementation testingDependencies.mockitoInline
+}

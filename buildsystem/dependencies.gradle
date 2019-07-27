@@ -1,0 +1,102 @@
+allprojects {
+    repositories {
+        jcenter()
+        google()
+    }
+}
+
+ext {
+    //Android
+    androidBuildToolsVersion = "28.0.3"
+    androidMinSdkVersion = 19
+    androidTargetSdkVersion = 28
+    androidCompileSdkVersion = 28
+    supportLibraryVersion = '28.0.0'
+    nav_version = '1.0.0'
+
+    //Libraries
+    daggerVersion = '2.23.2'
+    butterKnifeVersion = '8.8.1'
+    rxJavaVersion = '2.0.2'
+    rxAndroidVersion = '2.0.1'
+    javaxAnnotationVersion = '1.0'
+    javaxInjectVersion = '1'
+    gsonVersion = '2.8.0'
+    okHttpVersion = '2.5.0'
+    androidAnnotationsVersion = '28.0.0'
+    arrowVersion = '1.0.0'
+    guavaVersion = '22.0-android'
+    archLifecycleVersion = '1.1.1'
+    retrolambdaVersion = '2.5.6'
+    functionaljavaVersion = '4.8'
+    ExoplayerVersion = '2.10.2'
+
+    //Testing
+    robolectricVersion = '3.1.1'
+    jUnitVersion = '4.12'
+    assertJVersion = '1.7.1'
+    mockitoVersion = '2.10.0'
+    dexmakerVersion = '1.2'
+    espressoVersion = '3.0.1'
+    testingSupportLibVersion = '0.1'
+    uiautomatorVersion = '2.1.2'
+
+    //Development
+    leakCanaryVersion = '1.3.1'
+    findbugsVersion = '2.0.1'
+
+    librariesDependencies = [
+            supportV4            : "com.android.support:support-v4:$rootProject.supportLibraryVersion",
+            appcompatV7          : "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion",
+            cardviewV7           : "com.android.support:cardview-v7:$rootProject.supportLibraryVersion",
+            design               : "com.android.support:design:$rootProject.supportLibraryVersion",
+            recyclerviewV7       : "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion",
+            guava                : "com.google.guava:guava:$rootProject.guavaVersion",
+            daggerCompiler       : "com.google.dagger:dagger-compiler:${daggerVersion}",
+            dagger               : "com.google.dagger:dagger:${daggerVersion}",
+            butterKnife          : "com.jakewharton:butterknife:${butterKnifeVersion}",
+            rxJava               : "io.reactivex.rxjava2:rxjava:${rxJavaVersion}",
+            rxAndroid            : "io.reactivex.rxjava2:rxandroid:${rxAndroidVersion}",
+            javaxAnnotation      : "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
+            lifecycleExtensions  : "android.arch.lifecycle:extensions:$rootProject.archLifecycleVersion",
+            lifecycleCompiler    : "android.arch.lifecycle:compiler:$rootProject.archLifecycleVersion",
+            espressoIdlRes       : "com.android.support.test.espresso:espresso-idling-resource:$rootProject.espressoVersion",
+
+            javaxInject          : "javax.inject:javax.inject:${javaxInjectVersion}",
+            arrow                : "com.fernandocejas:arrow:${arrowVersion}",
+
+            okHttp               : "com.squareup.okhttp:okhttp:${okHttpVersion}",
+            gson                 : "com.google.code.gson:gson:${gsonVersion}",
+            androidAnnotations   : "com.android.support:support-annotations:${androidAnnotationsVersion}",
+            retrolambda      : "net.orfjackal.retrolambda:retrolambda:${retrolambdaVersion}",
+            functionaljava      : "org.functionaljava:functionaljava:${functionaljavaVersion}",
+            exoplayer            : "com.google.android.exoplayer:exoplayer-core:${ExoplayerVersion}",
+            nav_fragment        : "android.arch.navigation:navigation-fragment:${nav_version}",
+            nav_ui              : "android.arch.navigation:navigation-ui:${nav_version}",
+
+    ]
+
+    testingDependencies = [
+            junit            : "junit:junit:${jUnitVersion}",
+            mockito          : "org.mockito:mockito-core:${mockitoVersion}",
+            mockitoInline    : "org.mockito:mockito-inline:${mockitoVersion}",
+            dexmaker         : "com.google.dexmaker:dexmaker:${dexmakerVersion}",
+            dexmakerMockito  : "com.google.dexmaker:dexmaker-mockito:${dexmakerVersion}",
+            espresso         : "com.android.support.test.espresso:espresso-core:${espressoVersion}",
+            testingSupportLib: "com.android.support.test:testing-support-lib:${testingSupportLibVersion}",
+            espressoCore     : "com.android.support.test.espresso:espresso-core:$rootProject.espressoVersion",
+            espressoContrib  : "com.android.support.test.espresso:espresso-contrib:$rootProject.espressoVersion",
+            espressoIntents  : "com.android.support.test.espresso:espresso-intents:$rootProject.espressoVersion",
+            espressoIdlRes   : "com.android.support.test.espresso.idling:idling-concurrent:$rootProject.espressoVersion",
+
+            assertj          : "org.assertj:assertj-core:${assertJVersion}",
+            robolectric      : "org.robolectric:robolectric:${robolectricVersion}",
+            uiautomator      : "com.android.support.test.uiautomator:uiautomator-v18:${uiautomatorVersion}",
+    ]
+
+    developmentDependencies = [
+            leakCanary: "com.squareup.leakcanary:leakcanary-android:${leakCanaryVersion}",
+            findbugs  : "com.google.code.findbugs:jsr305:${findbugsVersion}",
+    ]
+
+}

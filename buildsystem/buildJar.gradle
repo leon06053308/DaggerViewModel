@@ -1,0 +1,96 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+
+def globalConfiguration = rootProject.extensions.getByName("ext")
+def BUILD_TOOLS_VERSION = globalConfiguration.getAt("androidBuildToolsVersion")
+
+def ADDON_NAME = "music_service"
+def PROJECT = "release"
+def OUTPUT_LIB = "/../../music_service_libs/"
+
+task assembleJarDex << {
+    // Get the location of the Android SDK
+    ext.androidSdkDir = System.env.ANDROID_HOME
+    if (androidSdkDir == null) {
+        Properties localProps = new Properties()
+        localProps.load(new FileInputStream(file('../local.properties')))
+        ext.androidSdkDir = localProps['sdk.dir']
+    }
+    // Make sure no existing jar file exists as this will cause dx to fail
+    String outPath = "${buildDir}${OUTPUT_LIB}${ADDON_NAME}";
+    if (!new File(outPath).exists()) {
+        new File(outPath).mkdirs();
+    }
+    // Use command line dx utility to convert *.class files into classes.dex inside jar archive
+    String cmdExt = Os.isFamily(Os.FAMILY_WINDOWS) ? '.bat' : ''
+    exec {
+        println "${androidSdkDir}/build-tools/${BUILD_TOOLS_VERSION}/dx${cmdExt} --dex " +
+                "--output=${outPath}/${ADDON_NAME}.jar " +
+                "${buildDir}/intermediates/classes/${PROJECT}/"
+        commandLine "${androidSdkDir}/build-tools/${BUILD_TOOLS_VERSION}/dx${cmdExt}", '--dex',
+                "--output=${outPath}/${ADDON_NAME}.jar",
+                "${buildDir}/intermediates/classes/${PROJECT}/"
+    }
+}
+
+task assembleJarStub << {
+    // Make sure no existing jar file exists as this will cause dx to fail
+    String outPath = "${buildDir}${OUTPUT_LIB}${ADDON_NAME}";
+
+    if (!new File(outPath).exists()) {
+        new File(outPath).mkdirs();
+    }
+    // new File("${buildDir}/../../../../../out/libs/${ADDON_NAME}_stub.jar").delete();
+    exec {
+        //jar cvf test.jar -C release/ .
+        println "jar cvf ${outPath}/${ADDON_NAME}_stub.jar -C " +
+                "${buildDir}/intermediates/classes/${PROJECT}/ ."
+        commandLine "jar", 'cvf', "${outPath}/${ADDON_NAME}_stub.jar", "-C",
+                "${buildDir}/intermediates/classes/${PROJECT}/", "."
+    }
+}
+
+ext.UserName = "";
+ext.PassWord = "";
+
+task getAccount() {
+    String accountFile = System.env.AIWAYS_MAVEN_ACCOUNT
+    println("account file path : " + accountFile)
+    if (accountFile == null) {
+        println("Please config the maven account in your system EVN");
+    } else {
+        readFile(accountFile)
+
+    }
+}
+
+def readFile(accountFile) {
+    File file = file(accountFile)
+    List<String> datas = file.readLines()
+    UserName = datas.get(0);
+    PassWord = datas.get(1);
+}
+
+publishing {
+//    def PUBLISH_LIB_FILE = "${buildDir}${OUTPUT_LIB}${ADDON_NAME}/${ADDON_NAME}_stub.jar";
+    def PUBLISH_LIB_FILE = "${buildDir}" + "/outputs/aar/hvacFW-release.aar";
+    publications {
+        mavenJava(MavenPublication) {
+            groupId = 'com.aiways.hvacfw'
+            artifactId = 'hvacfw-library'
+            artifact PUBLISH_LIB_FILE
+            version '0.0.1'
+        }
+    }
+
+    repositories {
+        maven {
+            // change to point to your repo, e.g. http://my.org/repo
+            url = "http://yoururl:yourportnumner/repository/maven-fw/"
+            getAccount
+            credentials {
+                username UserName
+                password PassWord
+            }
+        }
+    }
+}
